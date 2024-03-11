@@ -13,7 +13,7 @@ public class DriverSingleton {
         instantiate(driver);
     }
 
-    private WebDriver instantiate(String strategy) {
+    public WebDriver instantiate(String strategy) {
         DriverStrategy driverStrategy = DriverStrategyImplementer.chooseStrategy(strategy);
         driver = driverStrategy.setStrategy();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -35,7 +35,7 @@ public class DriverSingleton {
         driver.quit();
     }
 
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return driver;
     }
 }
