@@ -10,9 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Constants;
 
-import java.time.Duration;
-
-
 public class CheckoutPage {
     private WebDriver driver;
 
@@ -39,25 +36,22 @@ public class CheckoutPage {
     @FindBy(id = "billing_city")
     private WebElement city;
 
+    @FindBy(id = "billing_email")
+    private WebElement email;
+
     @FindBy(css = "#order_review > table > tfoot > tr.order-total > td > strong > span > bdi")
     private WebElement totalAmount;
 
     @FindBy(id = "place_order")
     private WebElement placeOrder;
 
-    @FindBy(css = "#post-207 > header > h1")
-    private WebElement orderStatus;
+    @FindBy(css = "#post-207 > content > div > div.woocommerce > div > p")
+    private WebElement orderMessage;
 
     public void provideBillingDetails() {
         WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(address));
         address.sendKeys("test");
-    }
-
-    public String getTotalAmount() {
-        WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOf(totalAmount));
-        return totalAmount.getText();
     }
 
     public void placeOrder() {
@@ -68,8 +62,8 @@ public class CheckoutPage {
 
     public String getOrderStatus() {
         WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOf(orderStatus));
-        return orderStatus.getText();
+        wait.until(ExpectedConditions.elementToBeClickable(orderMessage));
+        return orderMessage.getText();
     }
 
 

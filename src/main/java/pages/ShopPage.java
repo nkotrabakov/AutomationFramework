@@ -1,7 +1,6 @@
 package pages;
 
 import drivers.DriverSingleton;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,18 +31,34 @@ public class ShopPage {
     private WebElement cartButton;
 
     public void addItemToCart() {
-        secondPage.click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addToCartButton);
-
         WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton));
+        addToCartButton.click();
+
+        wait = new WebDriverWait(driver, Constants.TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(numberOfProducts));
 
-        if (numberOfProducts.getText().contains(Constants.CART_QUANTITY)) {
-            System.out.println("Cart has been updated");
+        for(int i = 0; i < 1000; i++) {
+            if (numberOfProducts.getText().contains(Constants.CART_QUANTITY)) {
+                System.out.println("Cart has been updated");
+                return;
+            }
+            else
+                continue;
         }
-        else {
-            System.out.println("Cart has not been updated");
-        }
+        System.out.println("Cart has not been updated");
+    }
+
+    public void goToSecondPage() {
+        WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
+        wait.until(ExpectedConditions.elementToBeClickable(secondPage));
+        secondPage.click();
+
+    }
+
+    public String getNumberOfProducts() {
+
+        return numberOfProducts.getText();
     }
 
     public void proceedToCheckout() {

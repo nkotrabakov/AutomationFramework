@@ -9,7 +9,7 @@ public class Main {
         FrameworkProperties frameworkProperties = new FrameworkProperties();
         DriverSingleton.getInstance(frameworkProperties.getProperty("browser"));
         WebDriver driver = DriverSingleton.getDriver();
-        driver.get("https://bitheap.tech");
+        driver.get(Constants.URL);
 
         HomePage homePage = new HomePage();
         SignInPage signInPage = new SignInPage();
@@ -21,7 +21,7 @@ public class Main {
         homePage.clickSignIn();
         signInPage.logIn(frameworkProperties.getProperty(Constants.EMAIL), frameworkProperties.getProperty(Constants.PASSWORD));
 
-        if (homePage.getUsername().equals("Hello, New")) {
+        if (homePage.getUsername().equals(Constants.USERNAME)) {
             System.out.println("Test passed");
         }
         else {

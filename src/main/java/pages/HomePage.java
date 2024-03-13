@@ -20,10 +20,10 @@ public class HomePage {
     @FindBy(xpath = "//button[@class='fc-button fc-cta-consent fc-primary-button']")
     private WebElement consentButton;
 
-    @FindBy(css = "#menu-item-1311 > a")
+    @FindBy(id = "menu-item-1311")
     private WebElement signInButton;
 
-    @FindBy(css = "#menu-item-1310 > a")
+    @FindBy(id = "menu-item-1310")
     private WebElement shopButton;
 
     @FindBy(css = "#menu-item-1314 > a")
@@ -49,6 +49,8 @@ public class HomePage {
     }
 
     public String getUsername() {
+        WebDriverWait wait = new WebDriverWait(driver, Constants.TIMEOUT);
+        wait.until(ExpectedConditions.visibilityOf(username));
         return username.getText();
     }
 }
